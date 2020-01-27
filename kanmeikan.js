@@ -11,8 +11,8 @@ const htmlToText = require('html-to-text');
 // });
 
 async function ax() {
-  console.log(url)
   let url = `https://wap.kanmeikan.com/novel/47466/${6581424 + (i*2)}.html`
+  console.log(url)
   let data = await axios.get(url)
   let html = data.data
   const text = htmlToText.fromString(html, {
