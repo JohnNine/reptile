@@ -2,7 +2,6 @@ const axios = require('axios')
 const cheerio = require('cheerio')
 const fs = require('fs');
 
-const url =  `https://wap.kanmeikan.com/novel/47466/6581424.html`
 const htmlToText = require('html-to-text');
 // fs.writeFile("input.txt", "hello world!", function(err) {
 //   if(err) {
@@ -12,25 +11,30 @@ const htmlToText = require('html-to-text');
 // });
 
 async function ax() {
-  console.log('!!!')
+  console.log(url)
+  let url = `https://wap.kanmeikan.com/novel/47466/${6581424 + (i*2)}.html`
   let data = await axios.get(url)
-  console.log(data)
   let html = data.data
-  console.log('get')
-  // let $ = cheerio.load(html)
-  // let txt = $('#nr1')
-  // console.log(txt)
   const text = htmlToText.fromString(html, {
-    wordwrap: 130
+    wordwrap: 1000
   });
-  fs.writeFile("input.txt", text, function(err) {
-  if(err) {
-      return console.log(err);
-  }
-  console.log("The file was saved!");
-});
+  fs.appendFile('input.txt', text, function (err) {
+    if (err) {
+      console.log('第'+ i +'节加载失败')
+    } else {
+      console.log('第'+ i +'节加载完成')
+    }
+  })
+  // fs.writeFile("input.txt", text, function (err) {
+  //   if (err) {
+  //     return console.log(err);
+  //   }
+  //   console.log("The file was saved!");
+  // });
 }
-ax()
+for ( let i = 0; i < 183; i++) {
+  ax(i)
+}
 // fs.readFile('input.txt', function (err, data) {
 //   if (err) {
 //       return console.error(err);
