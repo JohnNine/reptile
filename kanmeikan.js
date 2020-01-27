@@ -2,6 +2,8 @@ const axios = require('axios')
 const cheerio = require('cheerio')
 const fs = require('fs');
 
+const schedule = require('node-schedule');
+
 const htmlToText = require('html-to-text');
 // fs.writeFile("input.txt", "hello world!", function(err) {
 //   if(err) {
@@ -19,8 +21,14 @@ fs.writeFile("input.txt", '', function (err) {
 
 let i = 0
 
-async function ax() {
-  while (i < 400) {
+let rule = new schedule.RecurrenceRule();
+rule.second = [0, 5, 10, 15,20, 25, 30, 35, 40, 45, 50, 55];
+
+
+const scheduleCronstyle = () => {
+  //每分钟的第30秒定时执行一次:
+  schedule.scheduleJob(rule, async () => {
+    console.log(i + ' start')
     let url = `https://wap.kanmeikan.com/novel/47466/${6581424 + (i)}.html`
     console.log(url)
     let data = await axios.get(url)
@@ -28,25 +36,44 @@ async function ax() {
     const text = htmlToText.fromString(html, {
       wordwrap: 1000
     });
-    fs.appendFile('input.txt', text, function (err) {
-      if (err) {
-        console.log('第' + i + '节加载失败')
-      } else {
-        console.log('第' + i + '节加载完成')
-      }
-    })
-    i++
-  }
-
-  // fs.writeFile("input.txt", text, function (err) {
-  //   if (err) {
-  //     return console.log(err);
-  //   }
-  //   console.log("The file was saved!");
-  // });
+    if (text.length > 100) {
+      fs.appendFile('input.txt', text, function (err) {
+        if (err) {
+          console.log('第' + i + '节加载失败')
+        } else {
+          console.log('第' + i + '节加载完成')
+        }
+      })
+    }
+    i += 1
+    console.log('next ' + i)
+  });
 }
+scheduleCronstyle()
+// async function ax() {
+//   while (i < 400) {
+//     let url = `https://wap.kanmeikan.com/novel/47466/${6581424 + (i)}.html`
+//     console.log(url)
+//     let data = await axios.get(url)
+//     let html = data.data
+//     const text = htmlToText.fromString(html, {
+//       wordwrap: 1000
+//     });
+//     if(text.length > 100) {
+//       fs.appendFile('input.txt', text, function (err) {
+//         if (err) {
+//           console.log('第' + i + '节加载失败')
+//         } else {
+//           console.log('第' + i + '节加载完成')
+//         }
+//       })
+//     }
+//     i += 1
+//     console.log('next'+i)
+//   }
+// }
 // for (let i = 0; i < 183; i++) {
-ax()
+// ax()
 // }
 // fs.readFile('input.txt', function (err, data) {
 //   if (err) {
