@@ -29,7 +29,7 @@ const scheduleCronstyle = () => {
   //每分钟的第30秒定时执行一次:
   schedule.scheduleJob(rule, async () => {
     console.log('tip:' +  tip,'i:' + i)
-    if (i !== tip) {
+    if (i !== tip || i > 450) {
       tip = i
       console.log(i + ' 【start】')
       let url = `https://wap.kanmeikan.com/novel/47466/${6581424 + (i)}.html`
@@ -51,7 +51,7 @@ const scheduleCronstyle = () => {
         console.log('【next】 ' + i)
       }
     } else {
-      console.log('Loading.....')
+      console.log(`【${i}】Loading.....`)
     }
   });
 }
