@@ -20,7 +20,7 @@ fs.writeFile("input.txt", '', function (err) {
 let i = 0
 
 async function ax() {
-  while (i < 184) {
+  while (i < 400) {
     let url = `https://wap.kanmeikan.com/novel/47466/${6581424 + (i * 2)}.html`
     console.log(url)
     let data = await axios.get(url)
