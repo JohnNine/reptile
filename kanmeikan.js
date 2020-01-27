@@ -21,7 +21,7 @@ let i = 0
 
 async function ax() {
   while (i < 400) {
-    let url = `https://wap.kanmeikan.com/novel/47466/${6581424 + (i * 2)}.html`
+    let url = `https://wap.kanmeikan.com/novel/47466/${6581424 + (i)}.html`
     console.log(url)
     let data = await axios.get(url)
     let html = data.data
