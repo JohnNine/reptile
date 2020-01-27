@@ -20,6 +20,7 @@ fs.writeFile("input.txt", '', function (err) {
 });
 
 let i = 0
+let ready = 0
 let tip = null
 let rule = new schedule.RecurrenceRule();
 rule.second = [0, 10, 20, 30, 40, 50,];
@@ -31,7 +32,7 @@ const scheduleCronstyle = () => {
     console.log('tip:' +  tip,'i:' + i)
     if (i !== tip || i > 450) {
       tip = i
-      console.log(i + ' 【start】')
+      console.log(ready + ' 【start】')
       let url = `https://wap.kanmeikan.com/novel/47466/${6581424 + (i)}.html`
       console.log(url)
       let data = await axios.get(url)
@@ -40,16 +41,17 @@ const scheduleCronstyle = () => {
         wordwrap: 1000
       });
       if (text.length > 100) {
+        ready += 1
         fs.appendFile('input.txt', text, function (err) {
           if (err) {
-            console.log('第' + i + '节加载失败')
+            console.log('第' + readyi + '节加载失败')
           } else {
-            console.log('第' + i + '节加载完成')
+            console.log('第' + ready + '节加载完成')
           }
         })
-        i += 1
-        console.log('【next】 ' + i)
+        console.log('【next】 ' + ready)
       }
+      i += 1
     } else {
       console.log(`【${i}】Loading.....`)
     }
