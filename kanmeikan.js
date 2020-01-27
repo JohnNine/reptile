@@ -10,7 +10,7 @@ const htmlToText = require('html-to-text');
 //   console.log("The file was saved!");
 // });
 
-async function ax() {
+async function ax(i) {
   let url = `https://wap.kanmeikan.com/novel/47466/${6581424 + (i*2)}.html`
   console.log(url)
   let data = await axios.get(url)
