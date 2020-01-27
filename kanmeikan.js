@@ -20,33 +20,39 @@ fs.writeFile("input.txt", '', function (err) {
 });
 
 let i = 0
-
+let tip = null
 let rule = new schedule.RecurrenceRule();
-rule.second = [0, 5, 10, 15,20, 25, 30, 35, 40, 45, 50, 55];
+rule.second = [0, 10, 20, 30, 40, 50,];
 
 
 const scheduleCronstyle = () => {
   //每分钟的第30秒定时执行一次:
   schedule.scheduleJob(rule, async () => {
-    console.log(i + ' start')
-    let url = `https://wap.kanmeikan.com/novel/47466/${6581424 + (i)}.html`
-    console.log(url)
-    let data = await axios.get(url)
-    let html = data.data
-    const text = htmlToText.fromString(html, {
-      wordwrap: 1000
-    });
-    if (text.length > 100) {
-      fs.appendFile('input.txt', text, function (err) {
-        if (err) {
-          console.log('第' + i + '节加载失败')
-        } else {
-          console.log('第' + i + '节加载完成')
-        }
-      })
+    console.log('tip:' +  tip,'i:' + i)
+    if (i !== tip) {
+      tip = i
+      console.log(i + ' 【start】')
+      let url = `https://wap.kanmeikan.com/novel/47466/${6581424 + (i)}.html`
+      console.log(url)
+      let data = await axios.get(url)
+      let html = data.data
+      const text = htmlToText.fromString(html, {
+        wordwrap: 1000
+      });
+      if (text.length > 100) {
+        fs.appendFile('input.txt', text, function (err) {
+          if (err) {
+            console.log('第' + i + '节加载失败')
+          } else {
+            console.log('第' + i + '节加载完成')
+          }
+        })
+        i += 1
+        console.log('【next】 ' + i)
+      }
+    } else {
+      console.log('Loading.....')
     }
-    i += 1
-    console.log('next ' + i)
   });
 }
 scheduleCronstyle()
