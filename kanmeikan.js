@@ -9,6 +9,14 @@ const htmlToText = require('html-to-text');
 //   }
 //   console.log("The file was saved!");
 // });
+
+fs.writeFile("input.txt", '', function (err) {
+  if (err) {
+    return console.log(err);
+  }
+  console.log("清空");
+});
+
 let i = 0
 
 async function ax() {
@@ -38,7 +46,7 @@ async function ax() {
   // });
 }
 // for (let i = 0; i < 183; i++) {
-  ax()
+ax()
 // }
 // fs.readFile('input.txt', function (err, data) {
 //   if (err) {
