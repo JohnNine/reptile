@@ -31,7 +31,7 @@ const scheduleCronstyle = () => {
   schedule.scheduleJob(rule, async () => {
     console.log('tip:' +  tip,'i:' + i)
     if (i !== tip || i > 450) {
-      tip = i
+//      tip = i
       console.log(ready + ' 【start】')
       let url = `https://wap.kanmeikan.com/novel/47466/${6581424 + (i)}.html`
       console.log(url)
