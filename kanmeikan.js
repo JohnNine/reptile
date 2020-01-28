@@ -29,11 +29,12 @@ rule.second = [0, 10, 20, 30, 40, 50,];
 const scheduleCronstyle = () => {
   //每分钟的第30秒定时执行一次:
   schedule.scheduleJob(rule, async () => {
+    i += 1
     console.log('tip:' +  tip,'i:' + i)
     if (i !== tip || i > 450) {
 //      tip = i
       console.log(ready + ' 【start】')
-      let url = `https://wap.kanmeikan.com/novel/47466/${6581424 + (i)}.html`
+      let url = `https://wap.kanmeikan.com/novel/47466/${6581423 + (i)}.html`
       console.log(url)
       let data = await axios.get(url)
       let html = data.data
@@ -51,7 +52,6 @@ const scheduleCronstyle = () => {
         })
         console.log('【next】 ' + ready)
       }
-      i += 1
     } else {
       console.log(`【${i}】Loading.....`)
     }
